@@ -1,0 +1,330 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "Account Settings" : {
+
+    },
+    "Add up to 5 images" : {
+
+    },
+    "Cancel" : {
+
+    },
+    "Close" : {
+
+    },
+    "Comments" : {
+
+    },
+    "ConXdentity" : {
+
+    },
+    "ConXplore" : {
+
+    },
+    "ConXpressions" : {
+
+    },
+    "ConXtivity" : {
+
+    },
+    "Description" : {
+
+    },
+    "Edit_Key" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ändern"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit"
+          }
+        }
+      }
+    },
+    "Email_Key" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "eMail"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "eMail"
+          }
+        }
+      }
+    },
+    "Feed_Filter" : {
+
+    },
+    "Follow" : {
+
+    },
+    "Follow_Key" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Folgen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Follow"
+          }
+        }
+      }
+    },
+    "ImagePicker" : {
+
+    },
+    "Login_Key" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einloggen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Login"
+          }
+        }
+      }
+    },
+    "Login/Register" : {
+
+    },
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in erat sit amet enim dapibus tempus nec quis quam. Etiam." : {
+
+    },
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula finibus pretium. Morbi et dolor viverra, convallis metus at, volutpat ligula. Donec non aliquam mauris. Mauris et dolor et lacus." : {
+
+    },
+    "Name" : {
+
+    },
+    "New" : {
+
+    },
+    "New Post" : {
+
+    },
+    "NewMessage_Key" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Neue Nachricht"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New Message"
+          }
+        }
+      }
+    },
+    "No Translation" : {
+
+    },
+    "Open in Browser" : {
+
+    },
+    "Password_Key" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Passwort"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Password"
+          }
+        }
+      }
+    },
+    "PasswordConfirm_Key" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Passwort bestätigen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Confirm Password"
+          }
+        }
+      }
+    },
+    "Post" : {
+
+    },
+    "Profile_Filter" : {
+
+    },
+    "Real Name" : {
+
+    },
+    "Register_Key" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Account erstellen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create User"
+          }
+        }
+      }
+    },
+    "Save" : {
+
+    },
+    "Search_Key" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suchen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search"
+          }
+        }
+      }
+    },
+    "See more" : {
+
+    },
+    "Settings_Key" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Konfig"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settings"
+          }
+        }
+      }
+    },
+    "Show original" : {
+
+    },
+    "ShowAll_Key" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alle zeigen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show all"
+          }
+        }
+      }
+    },
+    "ShowFollowed_Key" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nur gefolgten zeigen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show followed"
+          }
+        }
+      }
+    },
+    "Time" : {
+
+    },
+    "Translate" : {
+
+    },
+    "Translated Texts" : {
+
+    },
+    "Unfollow" : {
+
+    },
+    "User Info" : {
+
+    },
+    "Username" : {
+
+    },
+    "Write your thoughts" : {
+
+    },
+    "X" : {
+
+    },
+    "Xdentity" : {
+
+    },
+    "Xplore" : {
+
+    },
+    "Xpressions" : {
+
+    },
+    "Xtivity" : {
+
+    },
+    "Xversations" : {
+
+    }
+  },
+  "version" : "1.0"
+}
