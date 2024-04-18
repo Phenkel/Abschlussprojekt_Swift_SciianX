@@ -18,6 +18,8 @@ class FirebaseAuthenticationRepository: AuthenticationRepository {
     private var userListener: ListenerRegistration?
     private var allUsersListener: ListenerRegistration?
     
+    private let cryptoKitHelper = CryptoKitHelper.shared
+    
     private init() {}
     
     func login(email: String, password: String, completion: @escaping (Result<UserProfile?, FirebaseError>) -> Void) {
@@ -201,7 +203,8 @@ class FirebaseAuthenticationRepository: AuthenticationRepository {
             following: [],
             followedBy: [],
             image: "",
-            description: ""
+            description: "",
+            publicKey: self.cryptoKitHelper.exportPublicKeyAsData()
         )
         
         do {

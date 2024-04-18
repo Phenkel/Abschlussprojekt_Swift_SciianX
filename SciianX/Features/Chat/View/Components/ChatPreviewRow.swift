@@ -8,30 +8,38 @@
 import SwiftUI
 
 struct ChatPreviewRow: View {
+    
+    @EnvironmentObject private var userViewModel: UserViewModel
+    @ObservedObject private var chatViewModel: ChatViewModel
+    
+    private var receipient: UserProfile? {
+        self.chatViewModel.users.first { $0.id != self.userViewModel.user?.id }
+    }
+    
+    init(_ chatViewModel: ChatViewModel) {
+        self._chatViewModel = ObservedObject(wrappedValue: chatViewModel)
+    }
+    
     var body: some View {
         VStack {
             HStack(alignment: .top) {
-                //ProfilePictureSmall()
+                ProfilePictureSmall(self.receipient)
                 
                 VStack(alignment: .leading) {
-                    Text("Username")
+                    Text(self.receipient?.realName ?? "Error - no receipient found")
                         .font(.footnote)
                         .fontWeight(.semibold)
                     
-                    Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in erat sit amet enim dapibus tempus nec quis quam. Etiam.")
+                    Text(self.chatViewModel.messages.last?.text ?? "Error - no message found")
                         .font(.footnote)
                         .fontWeight(.thin)
-                    
-                    Text("Time")
-                        .font(.footnote)
-                        .fontWeight(.ultraLight)
                 }
                 
                 Spacer()
                 
-                Text("New")
+                Text(self.chatViewModel.lastActiveAt.description)
                     .font(.footnote)
-                    .fontWeight(.semibold)
+                    .fontWeight(.ultraLight)
             }
             .padding(.horizontal)
             .padding(.vertical, 4)
@@ -39,8 +47,4 @@ struct ChatPreviewRow: View {
             Divider()
         }
     }
-}
-
-#Preview {
-    ChatPreviewRow()
 }

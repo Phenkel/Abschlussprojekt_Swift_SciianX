@@ -3,12 +3,17 @@ import SwiftUI
 struct FeedRow: View {
     
     @EnvironmentObject var authenticationViewModel: AuthenticationViewModel
+    @EnvironmentObject var chatOverviewViewModel: ChatOverviewViewModel
     @ObservedObject var feedViewModel: FeedViewModel
     
     @State private var showComments = false
     @State private var translationActive: Bool = false
+    
     private var textIsTranslated: Bool {
         self.feedViewModel.translatedText != nil
+    }
+    private var isOwnProfile: Bool {
+        self.feedViewModel.creator?.id == self.authenticationViewModel.user?.id
     }
     
     var body: some View {
@@ -26,12 +31,16 @@ struct FeedRow: View {
                         
                         Spacer()
                         
-                        Button(action: {
-                            
-                        }, label: {
-                            Image(systemName: "envelope")
-                                .foregroundStyle(LinearGradient(gradient: Gradient(colors: [.blue, .red]), startPoint: .leading, endPoint: .trailing))
-                        })
+                        if !isOwnProfile {
+                            if let receiverId = self.feedViewModel.creator?.id, let userId = self.authenticationViewModel.user?.id {
+                                NavigationLink(destination: {
+                                    SingleChatView(self.chatOverviewViewModel.getChat(receiver: receiverId, userId: userId))
+                                }, label: {
+                                    Image(systemName: "envelope")
+                                        .foregroundStyle(LinearGradient(gradient: Gradient(colors: [.blue, .red]), startPoint: .leading, endPoint: .trailing))
+                                })
+                            }
+                        }
                     }
                     Text((!self.translationActive ? self.feedViewModel.text : self.feedViewModel.translatedText) ?? "")
                         .font(.footnote)

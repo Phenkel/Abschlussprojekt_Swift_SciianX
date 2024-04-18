@@ -6,54 +6,41 @@
 //
 
 import SwiftUI
-import StreamChat
-import StreamChatSwiftUI
 
 struct ChatOverViewView: View {
+    
+    @EnvironmentObject var userViewModel: UserViewModel
+    @EnvironmentObject var chatOverviewViewModel: ChatOverviewViewModel
+    @EnvironmentObject var authenticationViewModel: AuthenticationViewModel
+    
     var body: some View {
         NavigationStack {
             ZStack {
                 BackgroundImage()
                 
                 ScrollView(.vertical, showsIndicators: false) {
-                    LazyVStack {
-                        ScrollView(.horizontal) {
-                            HStack {
-                                ForEach(0...25, id: \.self) { post in
-                                    //ProfilePictureSmall()
-                                }
-                            }
-                            .padding()
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        ForEach(self.authenticationViewModel.getUserContacts(withUserId: self.userViewModel.user?.id ?? "")) { user in
+                            // MARK: NAVLINK TO CHAT
+                            ProfilePictureSmall(user)
                         }
-                        Divider()
-                        
-                        ForEach(0...25, id: \.self) { post in
+                    }
+                    
+                    
+                    LazyVStack {
+                        ForEach(self.chatOverviewViewModel.allChats) { chat in
                             NavigationLink(
-                                destination: DetailChatView(),
+                                destination: SingleChatView(chat),
                                 label: {
-                                    ChatPreviewRow()
+                                    ChatPreviewRow(chat)
                                 })
                             .buttonStyle(.plain)
                         }
                     }
                 }
             }
-            .navigationTitle("Xversations")
+            .navigationTitle("ConXversations")
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button(action: {
-                        
-                    }, label: {
-                        Text("Translated Texts")
-                            .font(.caption2)
-                    })
-                }
-            }
         }
     }
-}
-
-#Preview {
-    ChatOverViewView()
 }

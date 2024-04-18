@@ -9,44 +9,54 @@ import SwiftUI
 
 struct SingleChatView: View {
     
+    @EnvironmentObject private var userViewModel: UserViewModel
+    @ObservedObject private var chatViewModel: ChatViewModel
+    
     @State private var message: String = ""
+    
+    private var receipient: UserProfile? {
+        self.chatViewModel.users.first { $0.id != self.userViewModel.user?.id }
+    }
+    
+    init(_ chatViewModel: ChatViewModel) {
+        self._chatViewModel = ObservedObject(wrappedValue: chatViewModel)
+    }
     
     var body: some View {
         ZStack {
             BackgroundImage()
             
             VStack {
-                //ProfilePreviewRow()
+                if let receipient {
+                    ProfilePreviewRow(receipient)
+                }
                 
                 ScrollView(showsIndicators: false) {
                     LazyVStack {
-                        ForEach(0...25, id: \.self) { post in
-                            ChatMessage(fromUser: Bool.random())
+                        ForEach(self.chatViewModel.messages) { message in
+                            ChatMessageRow(message, fromUser: receipient?.id != message.sender)
                         }
                     }
                 }
                 .defaultScrollAnchor(.bottom)
                 
-                TextField("NewMessage_Key", text: $message, axis: .vertical)
-                    .textFieldStyle(.roundedBorder)
+                HStack {
+                    TextField("NewMessage_Key", text: $message, axis: .vertical)
+                        .textFieldStyle(.roundedBorder)
+                    
+                    Button(action: {
+                        if !self.message.isEmpty, let userId = self.userViewModel.user?.id {
+                            self.chatViewModel.sendMessage(self.message, userId: userId)
+                            self.message = ""
+                        }
+                    }, label: {
+                        Image(systemName: "paperplane.fill")
+                    })
+                }
             }
             .padding()
-        }
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                Button(action: {
-                    
-                }, label: {
-                    Text("Translated Texts")
-                        .font(.caption2)
-                })
-            }
         }
         .toolbarBackground(.visible, for: .tabBar)
         .toolbarBackground(.visible, for: .navigationBar)
     }
-}
-
-#Preview {
-    SingleChatView()
 }

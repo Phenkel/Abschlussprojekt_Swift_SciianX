@@ -6,12 +6,14 @@
 //
 
 import Foundation
-import FirebaseFirestoreSwift
 
 struct ChatMessage: Codable, Identifiable {
-    @DocumentID var id: String?
+    var id: String {
+        UUID().uuidString
+    }
     
     let sender: String
-    let text: String
+    let textData: Data?
+    let imageData: Data?
     let createdAt: Date
 }

@@ -28,6 +28,9 @@
     "ConXtivity" : {
 
     },
+    "ConXversations" : {
+
+    },
     "Description" : {
 
     },
@@ -111,16 +114,7 @@
     "Login/Register" : {
 
     },
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in erat sit amet enim dapibus tempus nec quis quam. Etiam." : {
-
-    },
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula finibus pretium. Morbi et dolor viverra, convallis metus at, volutpat ligula. Donec non aliquam mauris. Mauris et dolor et lacus." : {
-
-    },
     "Name" : {
-
-    },
-    "New" : {
 
     },
     "New Post" : {
@@ -286,13 +280,7 @@
         }
       }
     },
-    "Time" : {
-
-    },
     "Translate" : {
-
-    },
-    "Translated Texts" : {
 
     },
     "Unfollow" : {

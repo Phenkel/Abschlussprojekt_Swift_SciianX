@@ -18,6 +18,7 @@ struct UserProfile: Codable, Equatable, Identifiable {
     let followedBy: [String]
     let image: String
     let description: String
+    let publicKey: Data
 }
 
 extension UserProfile {
@@ -39,6 +40,7 @@ extension UserProfile {
         var followedBy: [String]
         var image: String
         var description: String
+        var publicKey: Data
         
         fileprivate init(userProfile: UserProfile) {
             self.id = userProfile.id
@@ -51,6 +53,7 @@ extension UserProfile {
             self.followedBy = userProfile.followedBy
             self.image = userProfile.image
             self.description = userProfile.description
+            self.publicKey = userProfile.publicKey
         }
         
         fileprivate func toUserProfile() -> UserProfile {
@@ -64,7 +67,8 @@ extension UserProfile {
                 following: following,
                 followedBy: followedBy,
                 image: image,
-                description: description
+                description: description,
+                publicKey: publicKey
             )
         }
     }
