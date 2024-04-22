@@ -645,7 +645,6 @@
 			isa = PBXGroup;
 			children = (
 				10B923002BCD237900DAD920 /* Chat */,
-				10B922FE2BCD235C00DAD920 /* New Group */,
 				10B922F02BB569FF00DAD920 /* User */,
 				1094B9252BA33DE000F2B562 /* Feed */,
 				1094B9112BA2680800F2B562 /* FirebaseAuthentication */,
@@ -680,13 +679,6 @@
 				10B922F12BB56A1500DAD920 /* FirebaseUserRepository.swift */,
 			);
 			path = User;
-			sourceTree = "<group>";
-		};
-		10B922FE2BCD235C00DAD920 /* New Group */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "New Group";
 			sourceTree = "<group>";
 		};
 		10B923002BCD237900DAD920 /* Chat */ = {

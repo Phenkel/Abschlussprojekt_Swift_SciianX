@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 class ChatViewModel: ObservableObject, Identifiable {
     
@@ -32,6 +33,8 @@ class ChatViewModel: ObservableObject, Identifiable {
         self.messages.sort { $0.createdAt < $1.createdAt }
     }
     
+    //mh@dens-berlin.com
+    
     func update(_ chat: Chat) {
         self.lastActiveAt = chat.lastActiveAt
         self.modelMessages = chat.messages
@@ -46,8 +49,15 @@ class ChatViewModel: ObservableObject, Identifiable {
         self.users = users
     }
     
-    func sendMessage(_ text: String, userId: String) {
-        self.chatRepository.sendMessage(text, userId: userId, chat: self.asChat())
+    func sendMessage(_ text: String, image: UIImage?, userId: String) {
+        self.chatRepository.sendMessage(
+            text: !text.isEmpty ? text : nil,
+            image: image?.jpegData(compressionQuality: 0.8),
+            userId: self.userId,
+            chat: self.asChat(),
+            publicKey: self.users.first(where: { $0.id != userId })?.publicKey ?? Data()
+        )
+        print(self.users.first(where: { $0.id != userId })?.publicKey)
     }
     
     private func asChat() -> Chat {

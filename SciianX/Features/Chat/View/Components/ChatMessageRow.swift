@@ -9,10 +9,10 @@ import SwiftUI
 
 struct ChatMessageRow: View {
     
-    private var message: ChatMessage
+    @ObservedObject private var message: MessageViewModel
     private var fromUser: Bool
     
-    init(_ message: ChatMessage, fromUser: Bool) {
+    init(_ message: MessageViewModel, fromUser: Bool) {
         self.message = message
         self.fromUser = fromUser
     }
@@ -23,31 +23,43 @@ struct ChatMessageRow: View {
             HStack {
                 Spacer()
                 VStack(alignment: .leading) {
-                    Text(self.message.text)
-                        .font(.footnote)
-                        .frame(maxWidth: 300)
-                        .padding(4)
-                        .overlay {
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(.blue, lineWidth: 1)
-                        }
+                    if let text = message.text {
+                        Text(text)
+                            .font(.footnote)
+                            .frame(maxWidth: 300)
+                    }
+                    if let image = message.image {
+                        Image(uiImage: image)
+                            .resizable()
+                            .frame(maxWidth: 300)
+                            .scaledToFit()
+                    }
+                }
+                .padding()
+                .overlay {
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(.blue, lineWidth: 1)
                 }
             }
         } else {
             HStack {
                 VStack(alignment: .leading) {
-                    Text(self.message.text)
-                        .font(.footnote)
-                        .frame(maxWidth: 300)
-                        .padding(4)
-                        .overlay {
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(.red, lineWidth: 1)
-                        }
-                    
-                    Text(self.message.createdAt.description)
-                        .font(.footnote)
-                        .fontWeight(.light)
+                    if let text = message.text {
+                        Text(text)
+                            .font(.footnote)
+                            .frame(maxWidth: 300)
+                    }
+                    if let image = message.image {
+                        Image(uiImage: image)
+                            .resizable()
+                            .frame(maxWidth: 300)
+                            .scaledToFit()
+                    }
+                }
+                .padding()
+                .overlay {
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(.blue, lineWidth: 1)
                 }
                 Spacer()
             }

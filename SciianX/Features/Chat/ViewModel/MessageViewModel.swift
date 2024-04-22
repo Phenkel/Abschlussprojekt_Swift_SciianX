@@ -8,15 +8,15 @@
 import Foundation
 import SwiftUI
 
-class MessageViewModel: ObservableObject {
+class MessageViewModel: ObservableObject, Identifiable {
     
     @Published private(set) var text: String?
     @Published private(set) var image: UIImage?
     
     let sender: String
     let createdAt: Date
+    let id: String
     
-    private let id: String
     private let receiverPublicKey: Data
     private let cryptoKitHelper = CryptoKitHelper.shared
     
@@ -24,11 +24,18 @@ class MessageViewModel: ObservableObject {
         self.receiverPublicKey = receiverPublicKey
         
         if let textData = message.textData {
-            self.text = try? self.cryptoKitHelper.decryptText(encryptedData: textData, publicKey: self.receiverPublicKey)
+            do {
+                self.text = try self.cryptoKitHelper.decryptText(encryptedData: textData, publicKey: self.receiverPublicKey)
+            } catch {
+                print("Failed to decrypt text: \(error)")
+            }
         }
         if let imageData = message.imageData {
-            if let decryptedImageData = try? self.cryptoKitHelper.decryptImage(encryptedData: imageData, publicKey: self.receiverPublicKey) {
+            do {
+                let decryptedImageData = try self.cryptoKitHelper.decryptImage(encryptedData: imageData, publicKey: self.receiverPublicKey)
                 self.image = UIImage(data: decryptedImageData)
+            } catch {
+                print("Failed to decrypt image: \(error)")
             }
         }
         

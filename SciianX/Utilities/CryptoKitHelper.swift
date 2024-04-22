@@ -28,10 +28,10 @@ class CryptoKitHelper {
     func exportPrivateKeyAsString() throws -> String {
         let rawPrivateKey = self.getPrivateKey().rawRepresentation
         let privateKeyBase64 = rawPrivateKey.base64EncodedString()
-        
         guard let percentEncodedPrivateKey = privateKeyBase64.addingPercentEncoding(withAllowedCharacters: .alphanumerics) else {
             throw CryptoError.invalidPrivateKey
         }
+        
         return percentEncodedPrivateKey
     }
     
@@ -49,21 +49,34 @@ class CryptoKitHelper {
         guard let textData = text.data(using: .utf8) else {
             throw CryptoError.textEncoding
         }
-        let encryptedAesGcm = try AES.GCM.seal(textData, using: self.getSymmetricKey(publicKey: publicKey))
-        guard let encryptedData = encryptedAesGcm.combined else {
-            throw CryptoError.encryption
-        }
+        let encryptedData = try ChaChaPoly.seal(textData, using: self.getSymmetricKey(publicKey: publicKey)).combined
         
         return encryptedData
+        
+//        guard let textData = text.data(using: .utf8) else {
+//            throw CryptoError.textEncoding
+//        }
+//        let encryptedAesGcm = try AES.GCM.seal(textData, using: self.getSymmetricKey(publicKey: publicKey))
+//        guard let encryptedData = encryptedAesGcm.combined else {
+//            throw CryptoError.encryption
+//        }
+//        
+//        return encryptedData
     }
     
     func decryptText(encryptedData: Data, publicKey: Data) throws -> String {
         let publicKey = try self.importPublicKeyFromData(publicKey)
         
-        let encryptedAesGcm = try AES.GCM.SealedBox(combined: encryptedData)
-        let decryptedData = try AES.GCM.open(encryptedAesGcm, using: self.getSymmetricKey(publicKey: publicKey))
+        let sealedBox = try ChaChaPoly.SealedBox(combined: encryptedData)
+        let decryptedData = try ChaChaPoly.open(sealedBox, using: self.getSymmetricKey(publicKey: publicKey))
+        let text = String(decoding: decryptedData, as: UTF8.self)
         
-        return String(decoding: decryptedData, as: UTF8.self)
+        return text
+        
+//        let encryptedAesGcm = try AES.GCM.SealedBox(combined: encryptedData)
+//        let decryptedData = try AES.GCM.open(encryptedAesGcm, using: self.getSymmetricKey(publicKey: publicKey))
+//        
+//        return String(decoding: decryptedData, as: UTF8.self)
     }
     
     func encryptImage(image: Data, publicKey: Data) throws -> Data {

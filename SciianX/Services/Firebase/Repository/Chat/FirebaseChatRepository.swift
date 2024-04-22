@@ -13,6 +13,7 @@ class FirebaseChatRepository {
     static let shared = FirebaseChatRepository()
     
     private var allChatListener: ListenerRegistration?
+    private let cryptoKitHelper = CryptoKitHelper.shared
     
     private init() {}
     
@@ -25,9 +26,13 @@ class FirebaseChatRepository {
         }
     }
     
-    func sendMessage(_ text: String, userId: String, chat: Chat) {
-        // MARK: UPDATE USER
-        let message = ChatMessage(sender: userId, text: text, createdAt: Date())
+    func sendMessage(text: String?, image: Data?, userId: String, chat: Chat, publicKey: Data) {
+        let message = ChatMessage(
+            sender: userId,
+            textData: text != nil ? try? self.cryptoKitHelper.encryptText(text: text!, publicKey: publicKey) : nil,
+            imageData: image != nil ? try? self.cryptoKitHelper.encryptImage(image: image!, publicKey: publicKey) : nil,
+            createdAt: Date()
+        )
         let chat = chat.copy {
             $0.messages.append(message)
         }

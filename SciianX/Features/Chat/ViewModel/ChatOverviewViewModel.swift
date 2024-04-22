@@ -20,10 +20,12 @@ class ChatOverviewViewModel: ObservableObject {
             self.fetchAllChats(userId: id)
         }
         self.allUsers = allUsers
+        self.userId = user?.id
     }
     
     func updateUsers(user: UserProfile, users: [UserProfile]) {
         self.allUsers = users
+        self.userId = user.id
         
         for chat in self.allChats {
             let users = self.allUsers.filter { chat.users.compactMap { $0.id }.contains($0.id) }
@@ -43,10 +45,10 @@ class ChatOverviewViewModel: ObservableObject {
         let users = self.allUsers.filter { [userId1, userId2].contains($0.id) }
         let chat = Chat(users: [userId1, userId2], messages: [], lastActiveAt: Date())
         
-        self.allChats.append(ChatViewModel(chat, users: users, userId: users.first(where: { $0.id != self.userId })?.id ?? ""))
+        self.allChats.append(ChatViewModel(chat, users: users, userId: users.first(where: { $0.id == self.userId })?.id ?? ""))
         self.chatRepository.createChat(chat)
         
-        return allChats.first(where: { $0.id == chat.id }) ?? ChatViewModel(chat, users: users, userId: users.first(where: { $0.id != self.userId })?.id ?? "")
+        return allChats.first(where: { $0.id == chat.id }) ?? ChatViewModel(chat, users: users, userId: users.first(where: { $0.id == self.userId })?.id ?? "")
     }
     
     private func fetchAllChats(userId: String) {
@@ -56,7 +58,7 @@ class ChatOverviewViewModel: ObservableObject {
                 for chat in chats {
                     if !self.allChats.contains(where: { $0.id == chat.id }) {
                         let users = self.allUsers.filter { chat.users.contains($0.id) }
-                        self.allChats.append(ChatViewModel(chat, users: users, userId: users.first(where: { $0.id != self.userId })?.id ?? ""))
+                        self.allChats.append(ChatViewModel(chat, users: users, userId: users.first(where: { $0.id == self.userId })?.id ?? ""))
                     } else {
                         if let chatViewModel = self.allChats.first(where: { $0.id == chat.id }) {
                             chatViewModel.update(chat)

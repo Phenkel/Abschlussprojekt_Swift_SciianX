@@ -46,7 +46,7 @@ struct SingleChatView: View {
                     
                     Button(action: {
                         if !self.message.isEmpty, let userId = self.userViewModel.user?.id {
-                            self.chatViewModel.sendMessage(self.message, userId: userId)
+                            self.chatViewModel.sendMessage(self.message, image: nil, userId: userId)
                             self.message = ""
                         }
                     }, label: {

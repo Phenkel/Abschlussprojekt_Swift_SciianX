@@ -22,7 +22,8 @@ class MockAuthenticationRepository: AuthenticationRepository {
                 following: [],
                 followedBy: [],
                 image: "",
-                description: ""
+                description: "",
+                publicKey: Data()
             )
             completion(.success(userProfile))
         } else {
