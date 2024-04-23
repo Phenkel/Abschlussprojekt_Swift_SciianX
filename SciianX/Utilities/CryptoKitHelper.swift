@@ -43,55 +43,44 @@ class CryptoKitHelper {
         self.keychain.set(rawPrivateKey, forKey: "E2EEPrivateKey", withAccess: .accessibleWhenUnlocked)
     }
         
-    func encryptText(text: String, publicKey: Data) throws -> Data {
+    func encryptText(text: String, publicKey: Data) throws -> String {
         let publicKey = try self.importPublicKeyFromData(publicKey)
         
         guard let textData = text.data(using: .utf8) else {
             throw CryptoError.textEncoding
         }
         let encryptedData = try ChaChaPoly.seal(textData, using: self.getSymmetricKey(publicKey: publicKey)).combined
+        let encodedString = encryptedData.base64EncodedString()
         
-        return encryptedData
-        
-//        guard let textData = text.data(using: .utf8) else {
-//            throw CryptoError.textEncoding
-//        }
-//        let encryptedAesGcm = try AES.GCM.seal(textData, using: self.getSymmetricKey(publicKey: publicKey))
-//        guard let encryptedData = encryptedAesGcm.combined else {
-//            throw CryptoError.encryption
-//        }
-//        
-//        return encryptedData
+        return encodedString
     }
     
-    func decryptText(encryptedData: Data, publicKey: Data) throws -> String {
+    func decryptText(encodedString: String, publicKey: Data) throws -> String {
         let publicKey = try self.importPublicKeyFromData(publicKey)
         
+        guard let encryptedData = Data(base64Encoded: encodedString) else {
+            throw CryptoError.decoding
+        }
         let sealedBox = try ChaChaPoly.SealedBox(combined: encryptedData)
         let decryptedData = try ChaChaPoly.open(sealedBox, using: self.getSymmetricKey(publicKey: publicKey))
         let text = String(decoding: decryptedData, as: UTF8.self)
         
         return text
-        
-//        let encryptedAesGcm = try AES.GCM.SealedBox(combined: encryptedData)
-//        let decryptedData = try AES.GCM.open(encryptedAesGcm, using: self.getSymmetricKey(publicKey: publicKey))
-//        
-//        return String(decoding: decryptedData, as: UTF8.self)
     }
     
     func encryptImage(image: Data, publicKey: Data) throws -> Data {
         let publicKey = try self.importPublicKeyFromData(publicKey)
         
-        let encryptedData = try ChaChaPoly.seal(image, using: self.getSymmetricKey(publicKey: publicKey))
+        let encryptedData = try ChaChaPoly.seal(image, using: self.getSymmetricKey(publicKey: publicKey)).combined
         
-        return encryptedData.combined
+        return encryptedData
     }
     
     func decryptImage(encryptedData: Data, publicKey: Data) throws -> Data {
         let publicKey = try self.importPublicKeyFromData(publicKey)
         
-        let encryptedData = try ChaChaPoly.SealedBox(combined: encryptedData)
-        let decryptedData = try ChaChaPoly.open(encryptedData, using: self.getSymmetricKey(publicKey: publicKey))
+        let sealedBox = try ChaChaPoly.SealedBox(combined: encryptedData)
+        let decryptedData = try ChaChaPoly.open(sealedBox, using: self.getSymmetricKey(publicKey: publicKey))
         
         return decryptedData
     }
@@ -150,7 +139,7 @@ class CryptoKitHelper {
 }
 
 fileprivate enum CryptoError: Error, LocalizedError {
-    case invalidPrivateKey, invalidSalt, textEncoding, encryption
+    case invalidPrivateKey, invalidSalt, textEncoding, encryption, decoding
     
     var localizedDescription: String {
         switch self {
@@ -162,6 +151,8 @@ fileprivate enum CryptoError: Error, LocalizedError {
             return "Text encoding error"
         case .encryption:
             return "Encryption error"
+        case .decoding:
+            return "Decoding error"
         }
     }
 }

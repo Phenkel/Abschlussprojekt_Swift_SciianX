@@ -23,16 +23,26 @@ struct ChatMessageRow: View {
             HStack {
                 Spacer()
                 VStack(alignment: .leading) {
+                    if let image = message.image {
+                        Image(uiImage: image)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(maxWidth: 300)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                    }
+                    
                     if let text = message.text {
                         Text(text)
                             .font(.footnote)
                             .frame(maxWidth: 300)
                     }
-                    if let image = message.image {
-                        Image(uiImage: image)
-                            .resizable()
-                            .frame(maxWidth: 300)
-                            .scaledToFit()
+                    
+                    HStack {
+                        Spacer()
+                        
+                        Text(message.createdAtString)
+                            .font(.footnote)
+                            .fontWeight(.ultraLight)
                     }
                 }
                 .padding()
@@ -44,16 +54,26 @@ struct ChatMessageRow: View {
         } else {
             HStack {
                 VStack(alignment: .leading) {
+                    if let image = message.image {
+                        Image(uiImage: image)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(maxWidth: 300)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                    }
+                    
                     if let text = message.text {
                         Text(text)
                             .font(.footnote)
                             .frame(maxWidth: 300)
                     }
-                    if let image = message.image {
-                        Image(uiImage: image)
-                            .resizable()
-                            .frame(maxWidth: 300)
-                            .scaledToFit()
+                    
+                    HStack {
+                        Text(message.createdAtString)
+                            .font(.footnote)
+                            .fontWeight(.ultraLight)
+                        
+                        Spacer()
                     }
                 }
                 .padding()

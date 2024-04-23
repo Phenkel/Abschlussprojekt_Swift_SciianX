@@ -13,7 +13,7 @@ struct ChatMessage: Codable, Identifiable {
     }
     
     let sender: String
-    let textData: Data?
-    let imageData: Data?
+    let encryptedText: String?
+    let imageDataId: String?
     let createdAt: Date
 }

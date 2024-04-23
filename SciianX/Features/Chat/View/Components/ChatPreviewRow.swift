@@ -37,7 +37,7 @@ struct ChatPreviewRow: View {
                 
                 Spacer()
                 
-                Text(self.chatViewModel.lastActiveAt.description)
+                Text(self.chatViewModel.lastActiveAtString)
                     .font(.footnote)
                     .fontWeight(.ultraLight)
             }

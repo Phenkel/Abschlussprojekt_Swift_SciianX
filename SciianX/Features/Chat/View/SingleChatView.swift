@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PhotosUI
 
 struct SingleChatView: View {
     
@@ -13,7 +14,9 @@ struct SingleChatView: View {
     @ObservedObject private var chatViewModel: ChatViewModel
     
     @State private var message: String = ""
-    
+    @State private var imageItem: PhotosPickerItem?
+    @State private var image: UIImage?
+        
     private var receipient: UserProfile? {
         self.chatViewModel.users.first { $0.id != self.userViewModel.user?.id }
     }
@@ -40,17 +43,44 @@ struct SingleChatView: View {
                 }
                 .defaultScrollAnchor(.bottom)
                 
-                HStack {
+                HStack(alignment: .bottom) {
                     TextField("NewMessage_Key", text: $message, axis: .vertical)
                         .textFieldStyle(.roundedBorder)
                     
+                    if let image {
+                        Button(action: {
+                            self.imageItem = nil
+                        }, label: {
+                            ZStack {
+                                Image(uiImage: image)
+                                    .resizable()
+                                    .frame(width: 32, height: 32)
+                                    .scaledToFill()
+                                
+                                Image(systemName: "xmark.bin.fill")
+                                    .resizable()
+                                    .frame(width: 20, height: 20)
+                                    .foregroundColor(.red)
+                            }
+                        })
+                    } else {
+                        PhotosPicker(selection: $imageItem, matching: .images, label: {
+                            Image(systemName: "paperclip")
+                                .resizable()
+                                .frame(width: 32, height: 32)
+                        })
+                    }
+                    
                     Button(action: {
                         if !self.message.isEmpty, let userId = self.userViewModel.user?.id {
-                            self.chatViewModel.sendMessage(self.message, image: nil, userId: userId)
+                            self.chatViewModel.sendMessage(self.message, image: self.image, userId: userId)
                             self.message = ""
+                            self.imageItem = nil
                         }
                     }, label: {
                         Image(systemName: "paperplane.fill")
+                            .resizable()
+                            .frame(width: 32, height: 32)
                     })
                 }
             }
@@ -58,5 +88,10 @@ struct SingleChatView: View {
         }
         .toolbarBackground(.visible, for: .tabBar)
         .toolbarBackground(.visible, for: .navigationBar)
+        .onChange(of: self.imageItem) { item in
+            self.chatViewModel.convertImagePicker(item) { image in
+                self.image = image
+            }
+        }
     }
 }

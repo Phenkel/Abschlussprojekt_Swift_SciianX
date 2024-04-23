@@ -19,13 +19,12 @@ struct ChatOverViewView: View {
                 BackgroundImage()
                 
                 ScrollView(.vertical, showsIndicators: false) {
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        ForEach(self.authenticationViewModel.getUserContacts(withUserId: self.userViewModel.user?.id ?? "")) { user in
-                            // MARK: NAVLINK TO CHAT
-                            ProfilePictureSmall(user)
-                        }
-                    }
-                    
+//                    ScrollView(.horizontal, showsIndicators: false) {
+//                        ForEach(self.authenticationViewModel.getUserContacts(withUserId: self.userViewModel.user?.id ?? "")) { user in
+//                            // MARK: NAVLINK TO CHAT
+//                            ProfilePictureSmall(user)
+//                        }
+//                    }
                     
                     LazyVStack {
                         ForEach(self.chatOverviewViewModel.allChats) { chat in
